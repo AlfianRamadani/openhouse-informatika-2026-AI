@@ -8,9 +8,9 @@ from datetime import datetime
 
 # Konfigurasi Cloudinary
 cloudinary.config(
-    cloud_name=os.getenv("CLOUD_NAME"),
-    api_key=os.getenv("API_KEY"),
-    api_secret=os.getenv("API_SECRET")
+    cloud_name=os.getenv("CLOUDINARY_NAME") or os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY") or os.getenv("API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_SECRET_KEY") or os.getenv("API_SECRET")
 )
 
 def upload_image_to_cloudinary(image_pil, style_name="unknown"):

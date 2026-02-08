@@ -27,3 +27,9 @@ realesrgan
 
 # Runtime
 onnxruntime-gpu
+
+# App/UI
+streamlit
+cloudinary
+qrcode
+python-dotenv

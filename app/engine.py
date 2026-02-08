@@ -38,7 +38,7 @@ class NeuroMorph:
         duration = time.time() - start_setup
         print(f"Setup selesai dalam {duration:.2f} detik. Sistem siap!")
     
-    def generate(self, image_path, prompt, negative_prompt, steps, strength, lora_scale=0.6):
+    def generate(self, image_path, prompt, negative_prompt, steps, strength, lora_scale=0.6, guidance_scale=7.5):
         """Generate transformed image with AI"""
         print("Memulai proses generate gambar...")
         start_gen = time.time()
@@ -62,7 +62,7 @@ class NeuroMorph:
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
             generator=generator,
-            guidance_scale=5,
+            guidance_scale=guidance_scale,
             controlnet_conditioning_scale=0.95,
             cross_attention_kwargs={"scale": lora_scale}
         ).images[0]

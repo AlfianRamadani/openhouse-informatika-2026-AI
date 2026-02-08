@@ -12,7 +12,7 @@ from config import OUTPUT_DIR
 # Import Cloudinary utils
 from cloud_manager import upload_and_generate_qr
 
-st.set_page_config(page_title="AI Style Transfer", layout="centered")
+st.set_page_config(page_title="NeuroMorph", layout="centered")
 
 # Custom CSS for icons
 st.markdown("""
@@ -77,7 +77,7 @@ def save_temp_image(uploaded_file):
     image.save(temp_path)
     return temp_path
 
-st.markdown('<h1 style="text-align: center;"><i class="fas fa-palette"></i> AI Style Transfer</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="text-align: center;"><i class="fas fa-palette"></i> NeuroMorph</h1>', unsafe_allow_html=True)
 st.markdown("---")
 
 # Initialize session state

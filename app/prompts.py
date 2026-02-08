@@ -122,33 +122,21 @@ violence, blood, gore, weapons
 
 SETTINGS = {
     "zootopia": {
-        "steps": 30-40,
-        "cfg_scale": 7-9,
-        "sampler": "DPM++ 2M Karras atau Euler a",
-        "clip_skip": 2,
-        "lora_weight": 0.6-0.8,
-        "controlnet_weight": 0.8-1.0,
-        "gfpgan_visibility": 0.5-0.7,
-        "denoising_strength": 0.4-0.6  
+        "steps": 30,
+        "strength": 0.45,
+        "lora_scale": 0.7,
+        "guidance_scale": 7.0
     },
     "anime": {
-        "steps": 25-35,
-        "cfg_scale": 7-11,
-        "sampler": "DPM++ 2M Karras atau DPM++ SDE Karras",
-        "clip_skip": 2,
-        "lora_weight": 0.7-0.9,
-        "controlnet_weight": 0.7-0.9,
-        "gfpgan_visibility": 0.3-0.5,
-        "denoising_strength": 0.35-0.55
+        "steps": 28,
+        "strength": 0.4,
+        "lora_scale": 0.75,
+        "guidance_scale": 7.5
     },
     "ghibli": {
-        "steps": 30-45,
-        "cfg_scale": 6-8,
-        "sampler": "Euler a atau DPM++ 2M Karras",
-        "clip_skip": 2,
-        "lora_weight": 0.7-0.9,
-        "controlnet_weight": 0.6-0.8,
-        "gfpgan_visibility": 0.2-0.4, 
-        "denoising_strength": 0.4-0.6
+        "steps": 32,
+        "strength": 0.45,
+        "lora_scale": 0.7,
+        "guidance_scale": 6.5
     }
 }
