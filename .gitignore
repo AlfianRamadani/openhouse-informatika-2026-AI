@@ -1,0 +1,9 @@
+env/
+__pycache__/
+.streamlit/
+outputs/
+models/
+*.env
+.DS_Store
+.venv/
+venv/
