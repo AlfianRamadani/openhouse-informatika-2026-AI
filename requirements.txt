@@ -1,0 +1,29 @@
+# Core
+torch
+torchvision
+torchaudio
+
+# Stable Diffusion
+diffusers>=0.25.0
+transformers
+accelerate
+safetensors
+
+# Image / CV
+opencv-python
+pillow
+numpy
+scipy
+tqdm
+
+# ControlNet
+controlnet-aux
+
+# Face Restoration
+gfpgan
+basicsr
+facexlib
+realesrgan
+
+# Runtime
+onnxruntime-gpu
