@@ -20,7 +20,17 @@ Write-Host "=== SET ENV VARS ==="
 )
 [Environment]::SetEnvironmentVariable("OUTPUT_DIR", "D:\output", "User")
 [Environment]::SetEnvironmentVariable(
-  "LORA_DIR",
+  "LORA_ANIME",
+  "D:\models\lora\anime.safetensors",
+  "User"
+)
+[Environment]::SetEnvironmentVariable(
+  "LORA_GHIBLI",
+  "D:\models\lora\ghibli.safetensors",
+  "User"
+)
+[Environment]::SetEnvironmentVariable(
+  "LORA_ZOOTOPIA",
   "D:\models\lora\zootopia.safetensors",
   "User"
 )

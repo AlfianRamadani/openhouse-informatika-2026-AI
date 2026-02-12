@@ -28,7 +28,9 @@ cat <<EOF >> ~/.bashrc
 
 export MODEL_PATH="/models/base_model/Realistic_Vision_V6.0_NV_B1_fp16.safetensors"
 export OUTPUT_DIR="/output"
-export LORA_DIR="/models/lora/zootopia.safetensors"
+export LORA_ANIME="/models/lora/anime.safetensors"
+export LORA_GHIBLI="/models/lora/ghibli.safetensors"
+export LORA_ZOOTOPIA="/models/lora/zootopia.safetensors"
 export CONTROLNET_PATH="/models/controlnet/canny"
 export GFPGAN_PATH="/models/restoration/GFPGANv1.3.pth"
 

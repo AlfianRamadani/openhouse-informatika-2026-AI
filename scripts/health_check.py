@@ -28,10 +28,16 @@ def main():
     # Model paths
     checks = [
         check_env_path("MODEL_PATH"),
-        check_env_path("LORA_DIR"),
         check_env_path("CONTROLNET_PATH"),
         check_env_path("GFPGAN_PATH"),
     ]
+
+    lora_keys = ["LORA_ANIME", "LORA_GHIBLI", "LORA_ZOOTOPIA"]
+    if any(os.getenv(key) for key in lora_keys):
+        for key in lora_keys:
+            checks.append(check_env_path(key))
+    else:
+        checks.append(check_env_path("LORA_DIR"))
 
     for ok, msg in checks:
         status = "OK" if ok else "FAIL"

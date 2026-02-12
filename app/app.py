@@ -190,7 +190,9 @@ if submit_button:
                     negative_prompt=negative_prompt,
                     steps=steps,
                     strength=strength,
-                    lora_scale=lora_scale
+                    lora_scale=lora_scale,
+                    guidance_scale=guidance_scale,
+                    lora_name=selected_style
                 )
                 generation_time = time.time() - start_time
                 st.session_state.generation_time = generation_time

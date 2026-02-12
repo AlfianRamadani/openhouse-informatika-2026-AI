@@ -1,12 +1,12 @@
 import torch
 import os
 import time
-from config import MODEL_PATH, OUTPUT_DIR, LORA_DIR, CONTROLNET_PATH, GFPGAN_PATH
+from config import MODEL_PATH, OUTPUT_DIR, LORA_DIR, LORA_PATHS, CONTROLNET_PATH, GFPGAN_PATH
 from model_loader import (
     load_vae, 
     load_controlnet, 
     load_pipeline, 
-    load_lora, 
+    load_loras,
     load_gfpgan
 )
 from utils import (
@@ -22,6 +22,8 @@ class NeuroMorph:
     def __init__(self):
         self.pipe = None
         self.face_restorer = None
+        self.lora_adapters = []
+        self.default_lora = None
     
     def setup(self):
         """Initialize all models and pipeline"""
@@ -32,13 +34,27 @@ class NeuroMorph:
         vae = load_vae()
         controlnet = load_controlnet(CONTROLNET_PATH)
         self.pipe = load_pipeline(MODEL_PATH, controlnet, vae)
-        self.pipe = load_lora(self.pipe, LORA_DIR)
+        self.pipe, self.lora_adapters = load_loras(self.pipe, LORA_PATHS, fallback_path=LORA_DIR)
+        self.default_lora = self.lora_adapters[0] if self.lora_adapters else None
         self.face_restorer = load_gfpgan(GFPGAN_PATH)
         
         duration = time.time() - start_setup
         print(f"Setup selesai dalam {duration:.2f} detik. Sistem siap!")
     
-    def generate(self, image_path, prompt, negative_prompt, steps, strength, lora_scale=0.6, guidance_scale=7.5):
+    def _set_active_lora(self, adapter_name):
+        if not adapter_name:
+            return
+        if hasattr(self.pipe, "set_adapters"):
+            try:
+                self.pipe.set_adapters([adapter_name])
+            except TypeError:
+                self.pipe.set_adapters([adapter_name], adapter_weights=[1.0])
+        elif hasattr(self.pipe, "set_adapter"):
+            self.pipe.set_adapter(adapter_name)
+        else:
+            print("Peringatan: Pipeline tidak mendukung pemilihan LoRA adapter.")
+
+    def generate(self, image_path, prompt, negative_prompt, steps, strength, lora_scale=0.6, guidance_scale=7.5, lora_name=None):
         """Generate transformed image with AI"""
         print("Memulai proses generate gambar...")
         start_gen = time.time()
@@ -52,6 +68,11 @@ class NeuroMorph:
         seed = generate_random_seed()
         generator = torch.Generator('cuda').manual_seed(seed)
         
+        # Select LoRA adapter per style if available
+        if self.lora_adapters:
+            selected_lora = lora_name if lora_name in self.lora_adapters else self.default_lora
+            self._set_active_lora(selected_lora)
+
         # AI Diffusion
         start_diffusion = time.time()
         output = self.pipe(

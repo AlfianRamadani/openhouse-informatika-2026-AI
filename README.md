@@ -38,7 +38,7 @@ This section describes the technical steps in code.
 - Base model: Stable Diffusion 1.5 image-to-image pipeline loaded from a local `.safetensors` file.
 - VAE: `stabilityai/sd-vae-ft-mse`.
 - ControlNet: Canny edge guidance loaded from local `CONTROLNET_PATH`.
-- LoRA: Style adapter loaded from `LORA_DIR`.
+- LoRA: Style adapters loaded from `LORA_ANIME`, `LORA_GHIBLI`, `LORA_ZOOTOPIA` (falls back to `LORA_DIR`).
 - Scheduler: `DPMSolverMultistepScheduler`.
 - Face restoration: `GFPGAN` (used after diffusion).
 - Execution: CUDA, FP16, local GPU required.
@@ -58,7 +58,10 @@ The app reads configuration from `.env` or exported environment variables.
 ```bash
 MODEL_PATH=/absolute/path/to/base_model.safetensors
 OUTPUT_DIR=/absolute/path/to/outputs
-LORA_DIR=/absolute/path/to/lora.safetensors
+LORA_ANIME=/absolute/path/to/anime.safetensors
+LORA_GHIBLI=/absolute/path/to/ghibli.safetensors
+LORA_ZOOTOPIA=/absolute/path/to/zootopia.safetensors
+LORA_DIR=/absolute/path/to/lora.safetensors  # optional fallback if you only have one LoRA
 CONTROLNET_PATH=/absolute/path/to/controlnet/canny
 GFPGAN_PATH=/absolute/path/to/GFPGANv1.3.pth
 

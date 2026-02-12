@@ -50,25 +50,40 @@ def load_pipeline(model_path, controlnet, vae):
     
     return pipe
 
-def load_lora(pipe, lora_dir):
-    """Load LoRA weights"""
-    print("Loading LoRA weights...")
-    if not os.path.exists(lora_dir):
-        raise FileNotFoundError(f"File LoRA tidak ditemukan di: {lora_dir}")
+def load_lora(pipe, lora_path, adapter_name="lora"):
+    """Load LoRA weights (single adapter)"""
+    print(f"Loading LoRA weights: {adapter_name}")
+    if not os.path.exists(lora_path):
+        raise FileNotFoundError(f"File LoRA tidak ditemukan di: {lora_path}")
     
     try:
-        pipe.load_lora_weights(lora_dir, adapter_name="lora")
+        pipe.load_lora_weights(lora_path, adapter_name=adapter_name)
     except Exception as e:
         print(f"Mencoba metode alternatif untuk loading LoRA: {e}")
-        lora_folder = os.path.dirname(lora_dir)
-        lora_filename = os.path.basename(lora_dir)
+        lora_folder = os.path.dirname(lora_path)
+        lora_filename = os.path.basename(lora_path)
         pipe.load_lora_weights(
             lora_folder, 
             weight_name=lora_filename, 
-            adapter_name="lora"
+            adapter_name=adapter_name
         )
     
     return pipe
+
+def load_loras(pipe, lora_paths, fallback_path=None):
+    """Load multiple LoRA adapters if provided, otherwise fallback to single LoRA."""
+    loaded_adapters = []
+    if lora_paths:
+        for name, path in lora_paths.items():
+            if not path:
+                continue
+            pipe = load_lora(pipe, path, adapter_name=name)
+            loaded_adapters.append(name)
+    elif fallback_path:
+        pipe = load_lora(pipe, fallback_path, adapter_name="lora")
+        loaded_adapters.append("lora")
+    
+    return pipe, loaded_adapters
 
 def load_gfpgan(gfpgan_path):
     """Load GFPGAN face restorer"""
