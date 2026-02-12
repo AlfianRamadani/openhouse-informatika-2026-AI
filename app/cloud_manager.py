@@ -19,7 +19,7 @@ def upload_image_to_cloudinary(image_pil, style_name="unknown"):
     
     Args:
         image_pil: PIL Image object
-        style_name: nama style yang digunakan (anime/ghibli/zootopia)
+        style_name: nama style yang digunakan (anime)
     
     Returns:
         str: Public URL dari image yang diupload

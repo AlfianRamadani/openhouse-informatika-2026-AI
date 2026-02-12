@@ -18,15 +18,11 @@ MODEL_PATH = _get_env_path("MODEL_PATH")
 OUTPUT_DIR = _get_env_path("OUTPUT_DIR") or str(ROOT_DIR / "outputs")
 
 # LoRA configuration
-# Backward compatible: if LORA_ANIME/GHIBLI/ZOOTOPIA are not set, fallback to LORA_DIR.
+# Backward compatible: if LORA_ANIME is not set, fallback to LORA_DIR.
 LORA_DIR = _get_env_path("LORA_DIR")
 LORA_ANIME = _get_env_path("LORA_ANIME")
-LORA_GHIBLI = _get_env_path("LORA_GHIBLI")
-LORA_ZOOTOPIA = _get_env_path("LORA_ZOOTOPIA")
 LORA_PATHS = {
-    "anime": LORA_ANIME,
-    "ghibli": LORA_GHIBLI,
-    "zootopia": LORA_ZOOTOPIA,
+    "anime": LORA_ANIME
 }
 LORA_PATHS = {k: v for k, v in LORA_PATHS.items() if v}
 

@@ -122,26 +122,30 @@ if st.session_state.captured_image is not None:
 st.markdown("---")
 
 # Style selector
-st.markdown('<h3><i class="fas fa-brush"></i> Select Style</h3>', unsafe_allow_html=True)
-style_options = ["anime", "ghibli", "zootopia"]
-selected_style = st.selectbox(
-    "Choose style:",
-    options=style_options,
-    index=0,
-    label_visibility="collapsed"
+st.markdown('<h3><i class="fas fa-brush"></i> Style</h3>', unsafe_allow_html=True)
+selected_style = "anime"
+st.markdown('<p style="text-align:center; font-size:1.05rem;"><strong>Anime</strong></p>', unsafe_allow_html=True)
+
+# Custom prompt
+st.markdown('<h3><i class="fas fa-pen-nib"></i> Custom Prompt (Optional)</h3>', unsafe_allow_html=True)
+custom_prompt = st.text_area(
+    "Add custom prompt",
+    placeholder="contoh: rambut biru, latar taman sakura, pencahayaan sore",
+    height=90,
+    key="custom_prompt"
 )
 
 # Advanced settings (optional)
-with st.expander("Advanced Settings"):
+with st.expander("Advanced Settings (Compact)"):
     col1, col2 = st.columns(2)
     
     with col1:
-        steps = st.slider("Inference Steps", min_value=20, max_value=50, value=SETTINGS[selected_style]["steps"], step=5)
-        strength = st.slider("Transformation Strength", min_value=0.3, max_value=0.8, value=SETTINGS[selected_style]["strength"], step=0.05)
+        steps = st.slider("Inference Steps", min_value=20, max_value=36, value=SETTINGS[selected_style]["steps"], step=2)
+        strength = st.slider("Transformation Strength", min_value=0.35, max_value=0.6, value=SETTINGS[selected_style]["strength"], step=0.02)
     
     with col2:
-        lora_scale = st.slider("LoRA Scale", min_value=0.5, max_value=1.0, value=SETTINGS[selected_style]["lora_scale"], step=0.05)
-        guidance_scale = st.slider("Guidance Scale", min_value=5.0, max_value=12.0, value=SETTINGS[selected_style]["guidance_scale"], step=0.5)
+        lora_scale = st.slider("LoRA Scale", min_value=0.6, max_value=0.9, value=SETTINGS[selected_style]["lora_scale"], step=0.02)
+        guidance_scale = st.slider("Guidance Scale", min_value=6.0, max_value=9.0, value=SETTINGS[selected_style]["guidance_scale"], step=0.2)
 
 st.markdown("---")
 
@@ -168,6 +172,9 @@ if submit_button:
                 # Get prompts for selected style
                 positive_prompt = PROMPTS[selected_style]["positive"]
                 negative_prompt = PROMPTS[selected_style]["negative"]
+                user_prompt = custom_prompt.strip()
+                if user_prompt:
+                    positive_prompt = f"{positive_prompt}\n{user_prompt}"
                 
                 # Progress tracking
                 progress_bar = st.progress(0)
